@@ -1,4 +1,4 @@
-package com.cassol.errorHadler;
+package com.cassol.controller.errorHadler;
 
 import java.util.ArrayList;
 import java.util.List;

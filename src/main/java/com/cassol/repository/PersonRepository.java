@@ -9,6 +9,6 @@ import com.cassol.repository.entity.Person;
 public interface PersonRepository extends JpaRepository<Person, Long> {
 	
     Page<Person> findByNameIgnoreCaseOrEmailIgnoreCase(String name, String email, Pageable pageable);
-    long countByNameIgnoreCaseOrEmailIgnoreCase(String name, String email);
+    Long countByNameIgnoreCaseOrEmailIgnoreCase(String name, String email);
     
 }
