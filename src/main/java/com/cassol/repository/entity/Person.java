@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.cassol.exceptions.PersonLeftAreTheSameException;
+
 @Entity
 public class Person {
 	
@@ -28,6 +30,8 @@ public class Person {
 	@NotBlank(message="{person.name.empty}")
 	private String email;
 
+	private Person friend;
+
 	
 	
 	public Person() {
@@ -35,6 +39,11 @@ public class Person {
 	
 	public Person(Long id) {
 		this.id = id;
+	}
+
+	public Person(Long id, String name) {
+		this(id);
+		this.name = name;
 	}
 
 	public String getName() {
@@ -101,16 +110,41 @@ public class Person {
 		return true;
 	}
 
-	public Person chooseOne(List<Person> people) {
+	public Person chooseOne(List<Person> people) throws PersonLeftAreTheSameException {
 		Random random = new Random();
+		
 		int randomIndex = random.nextInt(people.size());
+		
 		if(people.get(randomIndex).equals(this)){
+		
 			if(people.size()>1)
-				return chooseOne(people);
+				return chooseOne(people); //devolve o papel para o pote e tenta outro
 			else
-				throw new IllegalStateException("Sobrou eu mesmo");
+				throw new PersonLeftAreTheSameException("just left the same person");
+			
 		}
-		return people.remove(randomIndex);
+		
+		setFriend(people.remove(randomIndex));
+		
+		return getFriend();
+	}
+	
+	public String showRelationship(){
+		if(getFriend()==null){
+			
+			throw new IllegalStateException("the names have not yet been drawn");
+			
+		}
+		
+		return this.getName() + " saiu com " + getFriend().getName();
+	}
+
+	public Person getFriend() {
+		return friend;
+	}
+
+	public void setFriend(Person friend) {
+		this.friend = friend;
 	}
 	
 	

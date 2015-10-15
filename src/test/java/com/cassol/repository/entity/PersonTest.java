@@ -1,23 +1,44 @@
 package com.cassol.repository.entity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
+import com.cassol.exceptions.PersonLeftAreTheSameException;
+
+
+
+/**
+ * 
+ * Devido a natureza randomica de alguns métodos, foram feitos testes estatístico.  
+ * 
+ */
+
 public class PersonTest {
+	
+	
+	@Test
+	public void shouldShowRelationship(){
+		Person person1 = new Person(1L,"Robson");
+		Person person2 = new Person(2L,"Priscila");
+		person1.setFriend(person2);
+		
+		Assert.assertEquals("Robson saiu com Priscila", person1.showRelationship());
+	}
 
 	@Test
-	public void shouldRandomlyChooseOnePersonX1000() {
+	public void shouldRandomlyChooseOnePersonX1000() throws PersonLeftAreTheSameException {
 		int i = 0;
 		while(i++<1000){
 			shouldRandomlyChooseOnePerson();
 		}
 	}
 	
-	public void shouldRandomlyChooseOnePerson() {
+	public void shouldRandomlyChooseOnePerson() throws PersonLeftAreTheSameException {
 		List<Person> people = new ArrayList<>();
 		
 		Person person1 = new Person(1L);
@@ -33,7 +54,7 @@ public class PersonTest {
 	
 	
 	@Test
-	public void shouldRandomlyChooseOnePersonDifferentFromSelfX1000() {
+	public void shouldRandomlyChooseOnePersonDifferentFromSelfX1000() throws PersonLeftAreTheSameException {
 		int i = 0;
 		while(i++<1000){
 			shouldRandomlyChooseOnePersonDifferentFromSelf();
@@ -41,7 +62,7 @@ public class PersonTest {
 	}
 
 
-	private void shouldRandomlyChooseOnePersonDifferentFromSelf() {
+	private void shouldRandomlyChooseOnePersonDifferentFromSelf() throws PersonLeftAreTheSameException {
 		List<Person> people = new ArrayList<>();
 		Person person1 = new Person(1L);
 		Person person2 = new Person(2L);
@@ -57,8 +78,8 @@ public class PersonTest {
 	}
 	
 	
-	@Test(expected=IllegalStateException.class)
-	public void shouldThrowExceptionWhenTheLastOneIsHimSelfX1000() {
+	@Test(expected=PersonLeftAreTheSameException.class)
+	public void shouldThrowExceptionWhenTheLastOneIsHimSelfX1000() throws PersonLeftAreTheSameException {
 		int i = 0;
 		while(i++<1000){
 			shouldThrowExceptionWhenTheLastOneIsHimSelf();
@@ -66,7 +87,8 @@ public class PersonTest {
 	}
 
 
-	private void shouldThrowExceptionWhenTheLastOneIsHimSelf() {
+	
+	private void shouldThrowExceptionWhenTheLastOneIsHimSelf() throws PersonLeftAreTheSameException {
 		List<Person> people = new ArrayList<>();
 		Person person1 = new Person(1L);
 		Person person2 = new Person(2L);
@@ -89,14 +111,6 @@ public class PersonTest {
 	
 	
 	
-	private List<Person> buildPersonList(int numberOfElements){
-		List<Person> people = new ArrayList<>();
-		long i = 0L;
-		while(i++<numberOfElements){
-			Person person1 = new Person(i);
-			people.add(person1);
-		}
-		return people;
-	}
+	
 
 }
