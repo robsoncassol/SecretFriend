@@ -1,4 +1,4 @@
-package com.cassol.model;
+package com.cassol.repository.entity; 
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 public class Person {
 	
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -41,6 +42,14 @@ public class Person {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

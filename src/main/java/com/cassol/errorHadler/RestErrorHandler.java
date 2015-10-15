@@ -1,4 +1,4 @@
-package com.cassol.controller;
+package com.cassol.errorHadler;
 
 import java.util.List;
 import java.util.Locale;

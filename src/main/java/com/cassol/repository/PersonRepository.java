@@ -1,20 +1,14 @@
 package com.cassol.repository;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.cassol.model.Person;
+import com.cassol.repository.entity.Person;
 
-public interface PersonRepository {
-
-	public void delete(Long id);
-
-	public void delete(Person person);
-
-	public List<Person> findAll();
-
-	public Person persist(Person person);
-
-	public Person findByName(String name);
-
-	public Person findByEmail(String email);
+public interface PersonRepository extends JpaRepository<Person, Long> {
+	
+    Page<Person> findByNameIgnoreCaseOrEmailIgnoreCase(String name, String email, Pageable pageable);
+    long countByNameIgnoreCaseOrEmailIgnoreCase(String name, String email);
+    
 }
