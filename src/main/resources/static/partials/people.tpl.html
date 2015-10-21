@@ -15,6 +15,7 @@
 		<tr ng-repeat="person in people | filter: textFilter">
 			<td>{{person.name}}</td>
 			<td>{{person.email}}</td>
+			<td><button ng-click="remove(person)"  type="button" class="btn btn-danger">Remove</td>
 		</tr>
 	</tbody>
 
