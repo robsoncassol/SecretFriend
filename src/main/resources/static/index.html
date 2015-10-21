@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" ng-app="People">
+<head>
+	<meta charset="UTF-8">
+	<title>Bem-vindo</title>
+	<link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+</head>
+<body>
+	<header>
+		<img src="img/logo.png">
+		<hr>
+	</header>
+	<div>
+		<!-- mudará de acordo com a rota -->
+		<ng-view></ng-view>
+	</div>
+	<footer>
+		<hr>
+		<p>Copyright 2014</p>	
+	</footer>
+	<script src="js/lib/angular.min.js"></script>
+	<script src="js/lib/angular-route.min.js"></script>
+	<script src="js/lib/angular-resource.min.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/directive/the-panel.js"></script>
+	<script src="js/service/PersonService.js"></script>
+	<script src="js/controller/WelcomeController.js"></script>
+	<script src="js/controller/PersonController.js"></script>
+	
+</body>
+</html>

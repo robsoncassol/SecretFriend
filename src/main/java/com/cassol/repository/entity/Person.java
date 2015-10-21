@@ -6,12 +6,18 @@ import java.util.Random;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.cassol.exceptions.PersonLeftAreTheSameException;
+
+
+
+//@RepositoryRestResource(path = "people")
+//interface PeopleRepository extends CrudRepository<Person, Long> {}
 
 @Entity
 public class Person {
@@ -21,15 +27,16 @@ public class Person {
 	@GeneratedValue
 	private Long id;
 	
-	@NotNull(message="{person.name.empty}")
-	@NotBlank(message="{person.name.empty}")
+	@NotNull
+	@NotBlank
 	private String name;
 	
-	@NotNull(message="{person.email.empty}")
-	@Email(message="{person.email.invalid}")
-	@NotBlank(message="{person.name.empty}")
+	@NotNull
+	@Email
+	@NotBlank
 	private String email;
 
+	@ManyToOne
 	private Person friend;
 
 	

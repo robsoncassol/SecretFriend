@@ -5,85 +5,98 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.MethodParameter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cassol.repository.PersonRepository;
 import com.cassol.repository.entity.Person;
 
 @RestController
-@RequestMapping("/person")
 public class PersonController {
 
 	@Autowired
 	private PersonRepository personRepository;
 
-	@RequestMapping("list")
-	public List<Person> list(@RequestParam Integer page, @RequestParam Integer maxItensPage) {
-		Page<Person> pagedList = personRepository.findAll(new PageRequest(page, maxItensPage));
-		return pagedList.getContent();
+
+	@RequestMapping(value = "/person", method = RequestMethod.GET)
+	public ResponseEntity<List<Person>> listAll() {
+		List<Person> persons = personRepository.findAll();
+		if (persons.isEmpty()) {
+			return new ResponseEntity<List<Person>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Person>>(persons, HttpStatus.OK);
 	}
 
+
+	@RequestMapping(value = "/person/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Person> getPerson(@PathVariable("id") long id) {
+		Person person = personRepository.findOne(id);
+		if (person == null) {
+			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Person>(person, HttpStatus.OK);
+	}
 	
-	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public Person add(final @RequestBody @Valid Person person, BindingResult result) throws Exception {
+
+	@RequestMapping(value = "/person", method = RequestMethod.POST)
+	public ResponseEntity<Void> createPerson(@RequestBody @Valid Person person, BindingResult result) {
 
 		if (result.hasErrors()) {
-			throw new MethodArgumentNotValidException(getMethodParamenter("add"), result);
-		} else {
-			personRepository.save(person);
+			return new ResponseEntity<Void>(HttpStatus.PRECONDITION_FAILED);
 		}
 
-		return person;
-	}
-
-
-	@RequestMapping(value = "edit", method = RequestMethod.POST)
-	public Person edit(final @RequestBody @Valid Person person, BindingResult result) throws Exception {
-		
-		if(person.getId()==null){
-			result.addError(new ObjectError("id", "person.edit.id.required"));
-		}
-		
-		if (result.hasErrors()) {
-			throw new MethodArgumentNotValidException(getMethodParamenter("edit"), result);
-		} else {
-			personRepository.save(person);
+		if (personRepository.findByEmail(person.getEmail())!=null) {
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 
-		return person;
+		personRepository.save(person);
+
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 	
-	private MethodParameter getMethodParamenter(String methodName) throws NoSuchMethodException {
-		MethodParameter parameter = new MethodParameter(this.getClass().getMethod(methodName, Person.class, BindingResult.class), 0);
-		return parameter;
-	}	
+    
+    @RequestMapping(value = "/person/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Person> updatePerson(@PathVariable("id") long id, @RequestBody Person person) {
+        Person currentPerson = personRepository.findOne(id);
+         
+        if (currentPerson==null) {
+            return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+        }
+ 
+        currentPerson.setName(person.getName());
+        currentPerson.setEmail(person.getEmail());
+         
+        return new ResponseEntity<Person>(currentPerson, HttpStatus.OK);
+    }
 
 
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable Long id) {
-		personRepository.delete(id);
-	}
-	
-	
-	@RequestMapping(value = "search")
-	public List<Person> search(@PathVariable String q, @RequestParam Integer page, @RequestParam Integer maxItensPage){
-		Page<Person> pagedList = personRepository.findByNameIgnoreCaseOrEmailIgnoreCase(q, q, new PageRequest(page, maxItensPage));
+    
+    @RequestMapping(value = "/person/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Person> deletePerson(@PathVariable("id") long id) {
+ 
+        Person person = personRepository.findOne(id);
+        if (person == null) {
+            return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+        }
+ 
+        personRepository.delete(id);
+        return new ResponseEntity<Person>(HttpStatus.NO_CONTENT);
+    }
+    
+
+	@RequestMapping(value = "/person/search")
+	public List<Person> search(@PathVariable String q, @RequestParam Integer page, @RequestParam Integer maxItensPage) {
+		Page<Person> pagedList = personRepository.findByNameIgnoreCaseOrEmailIgnoreCase(q, q,new PageRequest(page, maxItensPage));
 		return pagedList.getContent();
 	}
-	
 
 }
