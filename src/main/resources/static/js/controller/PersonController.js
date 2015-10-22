@@ -19,9 +19,14 @@ app.controller('PersonController', function($scope, PersonService) {
     
     $scope.save = function() {
 		PersonService.save($scope.person, function(status) {
+			$scope.person = {};
 			listPersons();
         });
     };
+    
+    $scope.edit = function(person){
+    	$scope.person = person;
+    }
 	
     
 });
