@@ -11,6 +11,11 @@ app.config(function($routeProvider) {
 		templateUrl: 'partials/people.tpl.html',
 		controller: 'PersonController'
 	});
+	
+	$routeProvider.when('/shuffle', {
+		templateUrl: 'partials/friends.tpl.html',
+		controller: 'ShuffleController'
+	});
 
 	$routeProvider.otherwise({redirectTo: '/'});
 	

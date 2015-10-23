@@ -1,0 +1,27 @@
+<div class="container">
+	<the-panel title="Listagem de pessoas" > 
+		<label> 
+			<input	type="search" placeholder="Nome ou e-mail" ng-model="textFilter">
+		</label>
+	
+		<table class="table">
+			<thead>
+				<tr >
+					<th>ID</th>
+					<th>Name</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+		
+			<tbody>
+				<tr ng-repeat="person in people | filter: textFilter">
+					<td>{{person.id}}</td>
+					<td>{{person.name}}</td>
+					<td>{{person.email}}</td>
+					<td class="text-right"><button ng-click="edit(person)"  type="button" class="btn btn-info">Edit</button></td>
+					<td class="text-right"><button ng-click="remove(person)"  type="button" class="btn btn-danger">Remove</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</the-panel>
+</div>

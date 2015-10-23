@@ -11,8 +11,20 @@ public class SecretFriendChooser {
 	Boolean validate(List<Person> people) {
 		return people != null && people.size() > 1;
 	}
+	
+	public List<Pair> build(List<Person> people){
+		raffle(people);
+		
+		List<Pair> pairs = new ArrayList<>();
 
-	public void raffle(List<Person> people) {
+		for (Person person : people) {
+			pairs.add(new Pair(person,person.getFriend()));
+		}
+		
+		return pairs;
+	}
+
+	void raffle(List<Person> people) {
 		if (validate(people)) {
 			try {
 

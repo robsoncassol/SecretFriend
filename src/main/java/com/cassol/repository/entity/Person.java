@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.cassol.exceptions.PersonLeftAreTheSameException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -36,10 +37,10 @@ public class Person {
 	@NotBlank
 	private String email;
 
+	@JsonIgnore
 	@ManyToOne
 	private Person friend;
 
-	
 	
 	public Person() {
 	}
