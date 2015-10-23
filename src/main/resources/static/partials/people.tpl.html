@@ -1,46 +1,47 @@
-<form class="form-horizontal" role="form" ng-submit="save()"  ng-model-options="{ getterSetter: true }">
-	<div class="form-group">
-		<label for="nome" class="col-sm-2 control-label">Nome</label>
-		<div class="col-sm-10">
-			<input type="text" required placeholder="nome" ng-model="person.name" class="form-control"/>
+	<form class="form-horizontal" role="form" ng-submit="merge()"  ng-model-options="{ getterSetter: true }">
+		<div class="form-group">
+			<label for="nome" class="col-sm-2 control-label">Nome</label>
+			<div class="col-sm-10">
+				<input type="text" required placeholder="nome" ng-model="person.name" class="form-control" focus-on="input-name"/>
+			</div>
 		</div>
-	</div>
-	<div class="form-group">
-		<label for="email" class="col-sm-2 control-label">Email</label>
-		<div class="col-sm-10">
-				<input type="email" required  placeholder="e-mail" ng-model="person.email" class="form-control"/>
+		<div class="form-group">
+			<label for="email" class="col-sm-2 control-label">Email</label>
+			<div class="col-sm-10">
+					<input type="email" required  placeholder="e-mail" ng-model="person.email" class="form-control" ng-disabled="person.id">
+			</div>
 		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<input  type="submit" class="btn btn-success" value="Save">
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<input  type="submit" class="btn btn-primary" value="Save">
+			</div>
 		</div>
-	</div>
+		
+	</form>
+
+	<the-panel title="Listagem de pessoas"> 
+		<label> 
+			<input	type="search" placeholder="Nome ou e-mail" ng-model="textFilter">
+		</label>
 	
-</form>
-
-<the-panel title="Listagem de pessoas"> 
-	<label> 
-		<input	type="search" placeholder="Nome ou e-mail" ng-model="textFilter">
-	</label>
-
-	<table class="table">
-		<thead>
-			<tr >
-				<th>Name</th>
-				<th>Email</th>
-			</tr>
-		</thead>
-	
-		<tbody>
-			<tr ng-repeat="person in people | filter: textFilter">
-				<td>{{person.name}}</td>
-				<td>{{person.email}}</td>
-				<td><button ng-click="edit(person)"  type="button" class="btn btn-info">Edit</button></td>
-				<td><button ng-click="remove(person)"  type="button" class="btn btn-danger">Remove</button></td>
-			</tr>
-		</tbody>
-	</table>
-
-</the-panel>
+		<table class="table">
+			<thead>
+				<tr >
+					<th>ID</th>
+					<th>Name</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+		
+			<tbody>
+				<tr ng-repeat="person in people | filter: textFilter">
+					<td>{{person.id}}</td>
+					<td>{{person.name}}</td>
+					<td>{{person.email}}</td>
+					<td><button ng-click="edit(person)"  type="button" class="btn btn-info">Edit</button></td>
+					<td><button ng-click="remove(person)"  type="button" class="btn btn-danger">Remove</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</the-panel>
 

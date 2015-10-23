@@ -74,7 +74,8 @@ public class PersonController {
  
         currentPerson.setName(person.getName());
         currentPerson.setEmail(person.getEmail());
-         
+        
+        personRepository.save(currentPerson);
         return new ResponseEntity<Person>(currentPerson, HttpStatus.OK);
     }
 
