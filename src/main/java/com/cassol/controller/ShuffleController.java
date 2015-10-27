@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cassol.repository.PersonRepository;
 import com.cassol.repository.entity.Person;
-import com.cassol.service.Pair;
 import com.cassol.service.SecretFriendChooser;
 
 @RestController
@@ -22,15 +21,15 @@ public class ShuffleController {
 
 
 	@RequestMapping(value = "/shuffle", method = RequestMethod.GET)
-	public ResponseEntity<List<Pair>> shuffle(SecretFriendChooser secretFriendChooser) {
+	public ResponseEntity<List<String>> shuffle(SecretFriendChooser secretFriendChooser) {
 		List<Person> people = personRepository.findAll();
 		
-		List<Pair> pairs = secretFriendChooser.build(people);
+		List<String> Strings = secretFriendChooser.build(people);
 		
 		if (people.isEmpty()) {
-			return new ResponseEntity<List<Pair>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<String>>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Pair>>(pairs, HttpStatus.OK);
+		return new ResponseEntity<List<String>>(Strings, HttpStatus.OK);
 	}
 
 }

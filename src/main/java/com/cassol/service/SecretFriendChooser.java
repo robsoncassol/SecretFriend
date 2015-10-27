@@ -12,13 +12,13 @@ public class SecretFriendChooser {
 		return people != null && people.size() > 1;
 	}
 	
-	public List<Pair> build(List<Person> people){
+	public List<String> build(List<Person> people){
 		raffle(people);
 		
-		List<Pair> pairs = new ArrayList<>();
+		List<String> pairs = new ArrayList<>();
 
 		for (Person person : people) {
-			pairs.add(new Pair(person,person.getFriend()));
+			pairs.add(person.relationship());
 		}
 		
 		return pairs;

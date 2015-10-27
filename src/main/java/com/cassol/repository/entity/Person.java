@@ -137,7 +137,7 @@ public class Person {
 		return getFriend();
 	}
 	
-	public String showRelationship(){
+	public String relationship(){
 		if(getFriend()==null){
 			
 			throw new IllegalStateException("the names have not yet been drawn");

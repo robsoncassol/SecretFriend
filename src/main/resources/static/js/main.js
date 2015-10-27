@@ -1,6 +1,6 @@
-var app = angular.module('People',['ngRoute','ngResource','services','directives']);
+var app = angular.module('People',['ngRoute','ngResource','services','directives','angularUtils.directives.dirPagination']);
 
-app.config(function($routeProvider) {
+app.config(function($routeProvider, paginationTemplateProvider) {
 
 	$routeProvider.when('/', {
 		templateUrl: 'partials/welcome.tpl.html',
@@ -18,5 +18,7 @@ app.config(function($routeProvider) {
 	});
 
 	$routeProvider.otherwise({redirectTo: '/'});
+	
+	paginationTemplateProvider.setPath('partials/dirPagination.tpl.html');
 	
 });

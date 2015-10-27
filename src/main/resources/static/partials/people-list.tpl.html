@@ -1,7 +1,7 @@
 <div class="container">
 	<the-panel title="Listagem de pessoas" > 
 		<label> 
-			<input	type="search" placeholder="Nome ou e-mail" ng-model="textFilter">
+			<input	type="search" placeholder="Nome ou e-mail" ng-model="textFilter" class="form-control">
 		</label>
 	
 		<table class="table">
@@ -14,7 +14,7 @@
 			</thead>
 		
 			<tbody>
-				<tr ng-repeat="person in people | filter: textFilter">
+				<tr dir-paginate="person in people  | itemsPerPage: 5 | filter: textFilter">
 					<td>{{person.id}}</td>
 					<td>{{person.name}}</td>
 					<td>{{person.email}}</td>
@@ -23,5 +23,6 @@
 				</tr>
 			</tbody>
 		</table>
+		 <dir-pagination-controls>controls	</dir-pagination-controls>
 	</the-panel>
 </div>

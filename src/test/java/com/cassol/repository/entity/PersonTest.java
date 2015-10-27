@@ -27,7 +27,7 @@ public class PersonTest {
 		Person person2 = new Person(2L,"Priscila");
 		person1.setFriend(person2);
 		
-		Assert.assertEquals("Robson saiu com Priscila", person1.showRelationship());
+		Assert.assertEquals("Robson saiu com Priscila", person1.relationship());
 	}
 
 	@Test
