@@ -2,6 +2,7 @@ package com.cassol.controller;
 
 import java.util.List;
 
+import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,27 +12,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cassol.repository.PersonRepository;
 import com.cassol.repository.entity.Person;
-import com.cassol.service.SecretFriendChooser;
+import com.cassol.service.EmailSender;
 
 @RestController
-public class ShuffleController {
-
+public class EmailController {
+	
+	
 	@Autowired
 	private PersonRepository personRepository;
+	
+	@Autowired
+	private EmailSender sender;
 
-
-	@RequestMapping(value = "/shuffle", method = RequestMethod.GET)
-	public ResponseEntity<List<String>> shuffle(SecretFriendChooser secretFriendChooser) {
-		List<Person> people = personRepository.findAll();
-		
-		List<String> Strings = secretFriendChooser.build(people);
-		
-		personRepository.save(people);
-		
-		if (people.isEmpty()) {
-			return new ResponseEntity<List<String>>(HttpStatus.NO_CONTENT);
+	@RequestMapping(value = "/send/emails", method = RequestMethod.POST)
+	public ResponseEntity<Void> sendEmails() {
+		try {
+			
+			List<Person> persons = personRepository.findAll();
+			sender.sendEmails(persons);
+			
+		} catch (EmailException e) {
+			e.printStackTrace();
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+			
 		}
-		return new ResponseEntity<List<String>>(Strings, HttpStatus.OK);
+		
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 }

@@ -12,6 +12,18 @@
 		<hr>
 	</header>
 	<div>
+
+		<div class="container" ng-controller="AlertsCtrl">
+			<div >
+				<div ng-repeat="(key,val) in alerts" class="alert {{key}}">
+					<div ng-repeat="msg in val track by $index">{{msg}}</div>
+					<div class="text-right">
+						<a ng-click="reset()" class="btn ">X</a>
+						</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- mudará de acordo com a rota -->
 		<ng-view></ng-view>
 	</div>
@@ -29,6 +41,8 @@
 	<script src="js/directive/the-panel.js"></script>
 	<script src="js/directive/focus-on.js"></script>
 	<script src="js/service/PersonService.js"></script>
+	<script src="js/service/AlertService.js"></script>
+	<script src="js/controller/AlertController.js"></script>
 	<script src="js/controller/WelcomeController.js"></script>
 	<script src="js/controller/PersonController.js"></script>
 	<script src="js/controller/ShuffleController.js"></script>

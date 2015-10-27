@@ -1,4 +1,4 @@
-app.controller('PersonController', function($scope, PersonService, focus) {
+app.controller('PersonController', function($scope, PersonService, focus, alertsManager) {
 
 	$scope.people = [];
 	$scope.person = {};
@@ -25,12 +25,19 @@ app.controller('PersonController', function($scope, PersonService, focus) {
     		PersonService.update({id: $scope.person.id},$scope.person, function(status) {
 				$scope.person = {};
 				focus("input-name");
+				alertsManager.addAlert("Cadastro efetuado!","alert-success");
 	        });
     	}else{
     		PersonService.save($scope.person, function(status) {
 				listPersons();
 				$scope.person = {};
 				focus("input-name");
+				alertsManager.addAlert("Cadastro efetuado!","alert-success");
+	        }, function(error){
+	        	console.log(error);
+	        	if(error.status == 409)
+	        		alertsManager.addAlert("Este e-mail já foi cadastrado. Tente outro.","alert-danger");
+	        	
 	        });
     	}	
     };
