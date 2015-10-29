@@ -1,4 +1,4 @@
-app.controller('ShuffleController', function($http, $scope, focus) {
+app.controller('PairsController', function($http, $scope,$location, alertsManager) {
 
 	$scope.pairs = [];
 	
@@ -24,6 +24,7 @@ app.controller('ShuffleController', function($http, $scope, focus) {
 	    		  url: '/send/emails'
 	    		}).then(function successCallback(response) {
 	    			alertsManager.addAlert("Emails enviados!","alert-success");
+	    			$location.path("/"); 
 	    		  }, function errorCallback(response) {
 	    			  console.log(response);
 	    			  alertsManager.addAlert("Erro ao enviar e-mails!","alert-danger");

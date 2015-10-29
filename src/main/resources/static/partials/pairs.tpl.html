@@ -3,9 +3,11 @@
 		<ul ng-repeat="pair in pairs">
 			<li><b>{{pair}}</b></li>
 		</ul>
-		<a ng-href="#/people">
-	            Voltar
-	    </a>
+		<div class="col-sm-2 text-left">
+			<a ng-href="#/" class="btn btn-primary">
+	           Voltar
+	        </a>
+		</div>
 	    <div class="form-group">
 			<div class="col-sm-12 text-right">
 				<button ng-click="sendEmails()" class="btn btn-primary">Enviar e-mails</button>

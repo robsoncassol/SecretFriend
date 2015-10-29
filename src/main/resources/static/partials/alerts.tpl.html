@@ -1,0 +1,11 @@
+<div class="container" ng-controller="AlertsCtrl">
+	<div>
+		<div ng-repeat="(key,val) in alerts" class="alert {{key}}">
+			<div ng-repeat="msg in val track by $index">{{msg}}</div>
+			<div class="text-right">
+				<a ng-click="reset()" class="btn ">X</a>
+			</div>
+		</div>
+	</div>
+</div>
+

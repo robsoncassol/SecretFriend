@@ -1,20 +1,20 @@
-var app = angular.module('People',['ngRoute','ngResource','services','directives','angularUtils.directives.dirPagination']);
+var app = angular.module('Persons',['ngRoute','ngResource','services','directives','angularUtils.directives.dirPagination']);
 
 app.config(function($routeProvider, paginationTemplateProvider) {
 
 	$routeProvider.when('/', {
-		templateUrl: 'partials/welcome.tpl.html',
-		controller: 'WelcomeController'
+		templateUrl: 'partials/list.tpl.html',
+		controller: 'ListController'
 	});
 
-	$routeProvider.when('/people', {
-		templateUrl: 'partials/people.tpl.html',
+	$routeProvider.when('/form', {
+		templateUrl: 'partials/form.tpl.html',
 		controller: 'PersonController'
 	});
 	
-	$routeProvider.when('/shuffle', {
-		templateUrl: 'partials/friends.tpl.html',
-		controller: 'ShuffleController'
+	$routeProvider.when('/pairs', {
+		templateUrl: 'partials/pairs.tpl.html',
+		controller: 'PairsController'
 	});
 
 	$routeProvider.otherwise({redirectTo: '/'});

@@ -1,38 +1,15 @@
-app.controller('PersonController', function($scope, PersonService, focus, alertsManager) {
+app.controller('PersonController', function($scope, PersonService, alertsManager, $location) {
 
-	$scope.people = [];
-	$scope.person = {};
+	$scope.person = PersonService.editingPerson;
 	
-	focus("input-name");
-	
-	function listPersons(){
-		PersonService.query(function(retorno) {
-	        $scope.people = retorno;
-	    });
-	};
-	
-	listPersons();
-	
-	$scope.remove = function(person) {
-		PersonService.delete({id: person.id}, function(status) {
-			listPersons();
-			$scope.person = {};
-        });
-    };
-    
     $scope.merge = function() {
     	if($scope.person.id){
     		PersonService.update({id: $scope.person.id},$scope.person, function(status) {
-				$scope.person = {};
-				focus("input-name");
-				alertsManager.addAlert("Cadastro efetuado!","alert-success");
+				cleanAlertRedirect("Atualizado com sucesso!");
 	        });
     	}else{
     		PersonService.save($scope.person, function(status) {
-				listPersons();
-				$scope.person = {};
-				focus("input-name");
-				alertsManager.addAlert("Cadastro efetuado!","alert-success");
+    			cleanAlertRedirect("Cadastro efetuado!");
 	        }, function(error){
 	        	console.log(error);
 	        	if(error.status == 409)
@@ -42,11 +19,10 @@ app.controller('PersonController', function($scope, PersonService, focus, alerts
     	}	
     };
     
-    $scope.edit = function(person){
-    	$scope.person = person;
+    function cleanAlertRedirect(msg){
+    	$scope.person = {};
+		alertsManager.addAlert(msg,"alert-success");
+		$location.path("/"); 
     }
-    
-   
-	
     
 });

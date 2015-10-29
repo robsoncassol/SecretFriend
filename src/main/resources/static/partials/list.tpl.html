@@ -1,0 +1,50 @@
+<div class="container">
+	<the-panel title="Bem-vindo"> 
+		<button ng-click="add()" class="btn btn-primary")>
+			Cadastrar Pessoas 
+		</button> 
+	</the-panel>
+</div>
+
+<div class="container">
+	<the-panel title="Pessoas" > 
+		<label> 
+			<input	type="search" placeholder="Nome ou e-mail" ng-model="textFilter" class="form-control">
+		</label>
+	
+		<table class="table table-hover" >
+			<thead>
+				<tr >
+					<th>ID</th>
+					<th>Name</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+		
+			<tbody>
+				<tr dir-paginate="person in persons  | itemsPerPage: 5 | filter: textFilter" ng-click="edit()">
+					<td >{{person.id}}</td>
+					<td >{{person.name}}</td>
+					<td >{{person.email}}</td>
+					<td class="text-right"><button ng-click="remove(person)"  type="button" class="btn btn-danger">Remove</button></td>
+				</tr>
+			</tbody>
+		</table>
+		 <dir-pagination-controls>controls	</dir-pagination-controls>
+	</the-panel>
+</div>
+
+<div class="container">
+	<div class="text-right">
+		<a ng-href="#/pairs" class="btn btn-primary">
+           Sortear Nomes
+        </a>
+	</div>
+</div>	
+
+
+<style>
+[ng-click] {
+  cursor: pointer;
+}
+</style>

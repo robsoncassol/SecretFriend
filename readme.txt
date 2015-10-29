@@ -30,5 +30,7 @@ mvn spring-boot:run
 
 acessar: http://localhost:8080/index.html
 
+Porta do servidor SMTP: 2778
+
 
 
